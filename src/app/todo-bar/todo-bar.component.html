@@ -1,0 +1,7 @@
+<button>ALL</button>
+<button>Active</button>
+<button>Completed</button>
+<br>
+<br>
+<input type="text" #todoVal>
+<button (click)="onAddTodo(todoVal.value); todoVal.value = ''">add</button>
