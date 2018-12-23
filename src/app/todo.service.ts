@@ -1,40 +1,32 @@
 import { Injectable } from '@angular/core';
-import {Todo} from './todo';
-import {Observable, of} from 'rxjs';
+import { Todo } from './todo';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
+
 export class TodoService {
-  constructor() { }
-
-  todoList: Todo[] = [
-    {id: 1, value: 'Hello', isActive: true},
-    {id: 2, value: 'How are you', isActive: true},
-    {id: 3, value: 'Goodbye', isActive: true}
-  ];
-
-  getTodo(): Observable<Todo[]>{
-    return of(this.todoList);
+  constructor(private http: HttpClient) {
   }
 
-  newId(){
-    return Math.max.apply(null, this.todoList.map(todo => todo.id)) + 1;
+  private todoUrl = 'http://localhost:3000/todo';
+  todoList: Todo[];
+
+  getTodo(): Observable<any> {
+    return this.http.get<any>(`${this.todoUrl}?activeTab=all&currentPage=1&perPage=5`);
   }
 
-  addNew(value): Observable<Todo[]>{
-    const id:number = this.newId();
-    this.todoList.push({id:id, value: value, isActive: true})
-    return of(this.todoList);
-  }
-  remove(id): Observable<Todo[]>{
-    this.todoList = this.todoList.filter(todo => todo.id != id);
-    return of(this.todoList);
-  }
-  complete(id): Observable<Todo[]>{
-    const index  = this.todoList.findIndex(todo => todo.id == id);
-    this.todoList[index].isActive = false;
-    return of(this.todoList);
+  addNew(value): Observable<any> {
+    return this.http.post<any>(`${this.todoUrl}`, { value: value });
   }
 
+  remove(id): Observable<any> {
+    return this.http.delete<any>(`${this.todoUrl}/${id}`, {});
+  }
+
+  complete(id): Observable<any> {
+    return this.http.put<any>(`${this.todoUrl}/${id}/makeCompl`, {});
+  }
 }

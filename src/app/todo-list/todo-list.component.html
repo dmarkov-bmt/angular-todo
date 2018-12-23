@@ -1,8 +1,16 @@
+<button>ALL</button>
+<button>Active</button>
+<button>Completed</button>
+<br>
+<br>
+<input type="text" #todoVal>
+<button (click)="addTodo(todoVal.value); todoVal.value = ''">add</button>
+
 <ul>
   <li *ngFor="let todo of todoList">
-    <button (click)="onComplete(todo.id)" *ngIf="todo.isActive">complete</button>
+    <button (click)="complete(todo.id)" *ngIf="todo.isActive">complete</button>
     <b *ngIf="!todo.isActive">Completed</b>
     {{todo.id}}. {{todo.value}}
-    <button (click)="onRemove(todo.id)">remove</button>
+    <button (click)="remove(todo.id)">remove</button>
   </li>
 </ul>

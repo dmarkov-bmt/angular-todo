@@ -1,18 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TodoBarComponent } from './todo-bar/todo-bar.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoInfoComponent } from './todo-info/todo-info.component';
 import { TodoPaginationComponent } from './todo-pagination/todo-pagination.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoBarComponent,
     TodoListComponent,
     TodoInfoComponent,
     TodoPaginationComponent,
@@ -20,7 +18,8 @@ import { TodoPaginationComponent } from './todo-pagination/todo-pagination.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

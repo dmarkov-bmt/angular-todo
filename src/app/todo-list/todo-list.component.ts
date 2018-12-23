@@ -10,24 +10,32 @@ import { TodoService } from '../todo.service';
 
 export class TodoListComponent implements OnInit {
   todoList: Todo[];
+
   constructor(private todoService: TodoService) {
   }
 
-  getTodo(): void{
+  getTodo(): void {
     this.todoService.getTodo()
-      .subscribe(todoList => this.todoList = todoList);
+      .subscribe(todoList => this.todoList = todoList.portion);
   }
 
   ngOnInit() {
     this.getTodo();
   }
-  onComplete(id){
-    this.todoService.complete(id)
-      .subscribe(todoList => this.todoList = todoList)
 
+  addTodo(value) {
+    if (value.trim())
+      this.todoService.addNew(value)
+        .subscribe(ok => this.getTodo());
   }
-  onRemove(id){
+
+  complete(id){
+    this.todoService.complete(id)
+      .subscribe(todoList => this.getTodo())
+  }
+
+  remove(id){
     this.todoService.remove(id)
-      .subscribe(todoList => this.todoList = todoList)
+      .subscribe(todoList => this.getTodo())
   }
 }
