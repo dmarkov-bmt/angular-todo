@@ -10,8 +10,11 @@ import { TodoService } from './todo.service';
 export class AppComponent implements OnInit {
   todoList: Todo[];
   activeTab: string = 'all';
-  perPage = 5;
-  curPage = 1;
+  perPage:number = 5;
+  curPage:number = 1;
+  lastPage:number;
+  activeItems: number;
+  complItems: number;
 
   constructor(private todoService: TodoService) {
   }
@@ -25,7 +28,13 @@ export class AppComponent implements OnInit {
   }
   getTodo(): void {
     this.todoService.getTodo(this.activeTab, this.curPage, this.perPage)
-      .subscribe(todoList => this.todoList = todoList.portion);
+      .subscribe(todo => {
+        this.todoList = todo.portion;
+        this.lastPage = todo.lastPage;
+        this.curPage = todo.currentPage;
+        this.activeItems = todo.activeItems;
+        this.complItems = todo.completedItems;
+      });
   }
 
   addTodo(value) {
@@ -44,4 +53,23 @@ export class AppComponent implements OnInit {
       .subscribe(ok => this.getTodo());
   }
 
+  pageLeft(){
+    if (this.curPage > 1) this.curPage--;
+    this.getTodo();
+  }
+
+  pageRight(){
+    if (this.curPage < this.lastPage) this.curPage++;
+    this.getTodo();
+  }
+
+  deleteAll(){
+    this.todoService.deleteAll()
+      .subscribe(ok => this.getTodo())
+  }
+
+  completeAll(){
+    this.todoService.completeAll()
+      .subscribe(ok => this.getTodo())
+  }
 }

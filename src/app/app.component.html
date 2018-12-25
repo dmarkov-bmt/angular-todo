@@ -5,11 +5,24 @@
   (add)="addTodo($event)"
   (complete)="complete($event)"
   (remove)="remove($event)"
-  (changeTab)="changeTab($event)"
-  >
+  (changeTab)="changeTab($event)">
 </app-todo-list>
 
-<app-todo-pagination></app-todo-pagination>
-<app-todo-info></app-todo-info>
+<app-todo-pagination
+  [curPage]="curPage"
+  [lastPage]="lastPage"
+  (left)="pageLeft()"
+  (right)="pageRight()">
+</app-todo-pagination>
+
+<br>
+<br>
+
+<app-todo-info
+  [activeItems]="activeItems"
+  [complItems]="complItems"
+  (delAll)="deleteAll()"
+  (complAll)="completeAll()"
+></app-todo-info>
 
 <router-outlet></router-outlet>

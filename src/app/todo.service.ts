@@ -29,4 +29,12 @@ export class TodoService {
   complete(id): Observable<any> {
     return this.http.put<any>(`${this.todoUrl}/${id}/makeCompl`, {});
   }
+
+  deleteAll(): Observable<any> {
+    return this.http.delete(`${this.todoUrl}`)
+  }
+
+  completeAll(): Observable<any> {
+    return this.http.put<any>(`${this.todoUrl}`, {})
+  }
 }
