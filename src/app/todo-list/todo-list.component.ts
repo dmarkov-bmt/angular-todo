@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Todo } from '../todo';
-import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -9,33 +8,27 @@ import { TodoService } from '../todo.service';
 })
 
 export class TodoListComponent implements OnInit {
-  todoList: Todo[];
-
-  constructor(private todoService: TodoService) {
-  }
-
-  getTodo(): void {
-    this.todoService.getTodo()
-      .subscribe(todoList => this.todoList = todoList.portion);
-  }
+  @Input() todoList: Todo[];
+  @Output() public add = new EventEmitter();
+  @Output() public complete = new EventEmitter();
+  @Output() public remove = new EventEmitter();
+  @Output() public changeTab = new EventEmitter();
 
   ngOnInit() {
-    this.getTodo();
   }
 
-  addTodo(value) {
-    if (value.trim())
-      this.todoService.addNew(value)
-        .subscribe(ok => this.getTodo());
+  addTodo(value){
+    this.add.emit(value);
   }
 
-  complete(id){
-    this.todoService.complete(id)
-      .subscribe(todoList => this.getTodo())
+  completeTodo(id){
+    this.complete.emit(id);
   }
 
-  remove(id){
-    this.todoService.remove(id)
-      .subscribe(todoList => this.getTodo())
+  removeTodo(id){
+    this.remove.emit(id)
+  }
+  activeTab(tab:string){
+    this.changeTab.emit(tab);
   }
 }

@@ -11,11 +11,11 @@ export class TodoService {
   constructor(private http: HttpClient) {
   }
 
-  private todoUrl = 'http://localhost:3000/todo';
+  private todoUrl = 'todo';
   todoList: Todo[];
 
-  getTodo(): Observable<any> {
-    return this.http.get<any>(`${this.todoUrl}?activeTab=all&currentPage=1&perPage=5`);
+  getTodo(activeTab, currentPage, perPage): Observable<any> {
+    return this.http.get<any>(`${this.todoUrl}?activeTab=${activeTab}&currentPage=${currentPage}&perPage=${perPage}`);
   }
 
   addNew(value): Observable<any> {

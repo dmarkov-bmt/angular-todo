@@ -14,11 +14,5 @@ export class TodoPaginationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todoService.getTodo()
-      .subscribe(todoList => {
-        this.curPage = todoList.currentPage;
-        this.lastPage = todoList.lastPage
-      });
   }
-
 }

@@ -1,6 +1,14 @@
 <h1> TODO </h1>
 <br>
-<app-todo-list></app-todo-list>
+<app-todo-list
+  [todoList]="todoList"
+  (add)="addTodo($event)"
+  (complete)="complete($event)"
+  (remove)="remove($event)"
+  (changeTab)="changeTab($event)"
+  >
+</app-todo-list>
+
 <app-todo-pagination></app-todo-pagination>
 <app-todo-info></app-todo-info>
 
