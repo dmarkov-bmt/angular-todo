@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-todo-pagination',
@@ -12,15 +11,17 @@ export class TodoPaginationComponent implements OnInit {
   @Output() left = new EventEmitter();
   @Output() right = new EventEmitter();
 
-  constructor(private todoService: TodoService) {
+  constructor() {
   }
+
   ngOnInit() {
   }
 
-  pageLeft(){
+  pageLeft() {
     this.left.emit();
   }
-  pageRight(){
+
+  pageRight() {
     this.right.emit();
   }
 }

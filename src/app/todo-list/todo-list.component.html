@@ -8,7 +8,7 @@
 
 <ul>
   <li *ngFor="let todo of todoList">
-    <button (click)="completeTodo(todo.id)" *ngIf="todo.isActive">complete</button>
+    <button (click)="completeTodo({id: todo.id, value: todo.value, isActive: false})" *ngIf="todo.isActive">complete</button>
     <b *ngIf="!todo.isActive">Completed</b>
     {{todo.value}}
     <button (click)="removeTodo(todo.id)">remove</button>

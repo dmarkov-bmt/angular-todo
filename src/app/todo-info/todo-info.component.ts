@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Todo } from '../todo';
 
 @Component({
   selector: 'app-todo-info',
@@ -8,6 +9,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class TodoInfoComponent implements OnInit {
   @Input() activeItems: number;
   @Input() complItems: number;
+  @Input() todoList: Todo[];
   @Output() complAll = new EventEmitter();
   @Output() delAll = new EventEmitter();
 
@@ -17,10 +19,14 @@ export class TodoInfoComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteAll(){
-    this.delAll.emit();
+  deleteAll(data) {
+    this.delAll.emit(data);
   }
-  completeAll(){
-    this.complAll.emit();
+
+  completeAll(data) {
+    data.forEach(todoItem => {
+      todoItem.isActive = false;
+    });
+    this.complAll.emit(data);
   }
 }

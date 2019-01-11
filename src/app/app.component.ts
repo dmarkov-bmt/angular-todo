@@ -10,42 +10,62 @@ import { TodoService } from './todo.service';
 export class AppComponent implements OnInit {
   todoList: Todo[];
   activeTab: string = 'all';
-  perPage:number = 5;
-  curPage:number = 1;
-  lastPage:number;
+  perPage: number = 5;
+  curPage: number = 1;
+  lastPage: number;
   activeItems: number;
   complItems: number;
+  todoPortion: Todo[];
 
   constructor(private todoService: TodoService) {
   }
+
   ngOnInit() {
     this.getTodo();
   }
 
-  changeTab(tab: string){
+  changeTab(tab: string) {
     this.activeTab = tab;
     this.getTodo();
   }
+
   getTodo(): void {
-    this.todoService.getTodo(this.activeTab, this.curPage, this.perPage)
-      .subscribe(todo => {
-        this.todoList = todo.portion;
-        this.lastPage = todo.lastPage;
-        this.curPage = todo.currentPage;
-        this.activeItems = todo.activeItems;
-        this.complItems = todo.completedItems;
+    this.todoService.getTodo()
+      .subscribe((todo) => {
+        this.todoList = todo;
+        this.activeItems = todo.filter(item => item.isActive).length;
+        this.complItems = this.todoList.length - this.activeItems;
+        if (this.activeTab === 'all') {
+          this.lastPage = Math.ceil(this.todoList.length / this.perPage);
+          this.todoPortion = this.todoList;
+        }
+        if (this.activeTab === 'active') {
+          this.lastPage = Math.ceil(this.activeItems / this.perPage);
+          this.todoPortion = this.todoList.filter(todoItem => todoItem.isActive);
+
+        }
+        if (this.activeTab === 'completed') {
+          this.lastPage = Math.ceil(this.complItems / this.perPage);
+          this.todoPortion = this.todoList.filter(todoItem => !todoItem.isActive);
+
+        }
+        if (this.lastPage === 0) this.lastPage = 1;
+
+        this.todoPortion = this.todoPortion.slice((this.curPage - 1) * this.perPage, this.curPage * this.perPage);
       });
   }
 
   addTodo(value) {
     if (value.trim())
       this.todoService.addNew(value)
-        .subscribe(ok => this.getTodo());
+        .subscribe(() => {
+          this.getTodo();
+        });
   }
 
-  complete(id) {
-    this.todoService.complete(id)
-      .subscribe(ok => this.getTodo());
+  complete(data) {
+    this.todoService.update(data)
+      .subscribe(() => this.getTodo());
   }
 
   remove(id) {
@@ -53,23 +73,23 @@ export class AppComponent implements OnInit {
       .subscribe(ok => this.getTodo());
   }
 
-  pageLeft(){
+  pageLeft() {
     if (this.curPage > 1) this.curPage--;
     this.getTodo();
   }
 
-  pageRight(){
+  pageRight() {
     if (this.curPage < this.lastPage) this.curPage++;
     this.getTodo();
   }
 
-  deleteAll(){
-    this.todoService.deleteAll()
-      .subscribe(ok => this.getTodo())
+  deleteAll(data) {
+    this.todoService.deleteAll(data)
+      .subscribe(ok => this.getTodo());
   }
 
-  completeAll(){
-    this.todoService.completeAll()
-      .subscribe(ok => this.getTodo())
+  completeAll(data) {
+    this.todoService.completeAll(data)
+      .subscribe(ok => this.getTodo());
   }
 }

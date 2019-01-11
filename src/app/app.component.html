@@ -1,7 +1,7 @@
 <h1> TODO </h1>
 <br>
 <app-todo-list
-  [todoList]="todoList"
+  [todoList]="todoPortion"
   (add)="addTodo($event)"
   (complete)="complete($event)"
   (remove)="remove($event)"
@@ -19,10 +19,11 @@
 <br>
 
 <app-todo-info
+  [todoList]="todoList"
   [activeItems]="activeItems"
   [complItems]="complItems"
-  (delAll)="deleteAll()"
-  (complAll)="completeAll()"
+  (delAll)="deleteAll($event)"
+  (complAll)="completeAll($event)"
 ></app-todo-info>
 
 <router-outlet></router-outlet>

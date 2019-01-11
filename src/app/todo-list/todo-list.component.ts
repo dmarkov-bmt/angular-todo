@@ -17,18 +17,19 @@ export class TodoListComponent implements OnInit {
   ngOnInit() {
   }
 
-  addTodo(value){
+  addTodo(value) {
     this.add.emit(value);
   }
 
-  completeTodo(id){
-    this.complete.emit(id);
+  completeTodo(data) {
+    this.complete.emit(data);
   }
 
-  removeTodo(id){
-    this.remove.emit(id)
+  removeTodo(id) {
+    this.remove.emit(id);
   }
-  activeTab(tab:string){
+
+  activeTab(tab: string) {
     this.changeTab.emit(tab);
   }
 }

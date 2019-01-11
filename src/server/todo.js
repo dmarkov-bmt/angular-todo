@@ -20,7 +20,7 @@ let Todo = sequelize.define('todo', {
   freezeTableName: true
 });
 
-Todo.sync({force: true});
+Todo.sync({ force: true });
 
 productRouter.put('/:id/makeCompl', async (req, res) => {
   let item = await Todo.findById(req.params.id);
