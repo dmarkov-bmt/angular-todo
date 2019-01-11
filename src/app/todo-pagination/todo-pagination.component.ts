@@ -14,14 +14,14 @@ export class TodoPaginationComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  pageLeft() {
+  public pageLeft() {
     this.left.emit();
   }
 
-  pageRight() {
+  public pageRight() {
     this.right.emit();
   }
 }

@@ -16,14 +16,14 @@ export class TodoInfoComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  deleteAll(data) {
+  public deleteAll(data) {
     this.delAll.emit(data);
   }
 
-  completeAll(data) {
+  public completeAll(data) {
     data.forEach(todoItem => {
       todoItem.isActive = false;
     });

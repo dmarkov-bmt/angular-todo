@@ -7,29 +7,30 @@ import { TodoService } from './todo.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
+
 export class AppComponent implements OnInit {
-  todoList: Todo[];
-  activeTab: string = 'all';
-  perPage: number = 5;
-  curPage: number = 1;
-  lastPage: number;
-  activeItems: number;
-  complItems: number;
-  todoPortion: Todo[];
+  public todoList: Todo[];
+  public activeTab: string = 'all';
+  public perPage: number = 5;
+  public curPage: number = 1;
+  public lastPage: number;
+  public activeItems: number;
+  public complItems: number;
+  public todoPortion: Todo[];
 
   constructor(private todoService: TodoService) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getTodo();
   }
 
-  changeTab(tab: string) {
+  public changeTab(tab: string) {
     this.activeTab = tab;
     this.getTodo();
   }
 
-  getTodo(): void {
+  public getTodo(): void {
     this.todoService.getTodo()
       .subscribe((todo) => {
         this.todoList = todo;
@@ -50,12 +51,13 @@ export class AppComponent implements OnInit {
 
         }
         if (this.lastPage === 0) this.lastPage = 1;
+        if (this.curPage > this.lastPage) this.curPage = 1;
 
         this.todoPortion = this.todoPortion.slice((this.curPage - 1) * this.perPage, this.curPage * this.perPage);
       });
   }
 
-  addTodo(value) {
+  public addTodo(value) {
     if (value.trim())
       this.todoService.addNew(value)
         .subscribe(() => {
@@ -63,32 +65,32 @@ export class AppComponent implements OnInit {
         });
   }
 
-  complete(data) {
+  public complete(data) {
     this.todoService.update(data)
       .subscribe(() => this.getTodo());
   }
 
-  remove(id) {
+  public remove(id) {
     this.todoService.remove(id)
       .subscribe(ok => this.getTodo());
   }
 
-  pageLeft() {
+  public pageLeft() {
     if (this.curPage > 1) this.curPage--;
     this.getTodo();
   }
 
-  pageRight() {
+  public pageRight() {
     if (this.curPage < this.lastPage) this.curPage++;
     this.getTodo();
   }
 
-  deleteAll(data) {
+  public deleteAll(data) {
     this.todoService.deleteAll(data)
       .subscribe(ok => this.getTodo());
   }
 
-  completeAll(data) {
+  public completeAll(data) {
     this.todoService.completeAll(data)
       .subscribe(ok => this.getTodo());
   }

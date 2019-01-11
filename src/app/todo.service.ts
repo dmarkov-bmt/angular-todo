@@ -10,7 +10,7 @@ export class TodoService {
   constructor(private http: HttpClient) {
   }
 
-  private todoUrl = 'hello';
+  private todoUrl = 'todo';
 
   getTodo(): Observable<any> {
     return this.http.get<any>(`${this.todoUrl}`);
@@ -29,7 +29,7 @@ export class TodoService {
   }
 
   deleteAll(data): Observable<any> {
-    return this.http.delete<any>(`${this.todoUrl}`, { body: data });
+    return this.http.request<any>('delete', `${this.todoUrl}`, { body: data });
   }
 
   completeAll(data): Observable<any> {
