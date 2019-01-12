@@ -13,6 +13,7 @@ export class TodoListComponent implements OnInit {
   @Output() public complete = new EventEmitter();
   @Output() public remove = new EventEmitter();
   @Output() public changeTab = new EventEmitter();
+  public changeId: String;
 
   public ngOnInit() {
   }
@@ -29,7 +30,11 @@ export class TodoListComponent implements OnInit {
     this.remove.emit(id);
   }
 
-  public activeTab(tab: string) {
+  public activeTab(tab) {
     this.changeTab.emit(tab);
+  }
+
+  public changeItem(id){
+    this.changeId = id;
   }
 }

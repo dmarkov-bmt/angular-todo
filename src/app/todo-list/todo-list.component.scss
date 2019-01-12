@@ -1,0 +1,52 @@
+.tab {
+  background-color: lightblue;
+  border: 1px solid blue;
+  border-radius: 4px;
+  margin: 0 0.3%;
+}
+
+
+.text-input {
+  margin-top: 1%;
+
+  input {
+    border: 1px solid orange;
+    background-color: khaki;
+    padding: 4px 10px;
+
+  }
+
+  button {
+    border: 1px solid green;
+    margin: 0 1%;
+    background-color: lightgreen;
+    padding: 4px 30px;
+  }
+}
+
+ul {
+
+  li {
+    list-style-type: none;
+  }
+
+  .compl-button {
+    border: 1px solid rgba(0, 14, 244, 0.38);
+    background-color: #00ffff;
+    padding: 4px 15px;
+  }
+
+  .remove-button {
+    border: 1px solid #ff4d51;
+    background-color: #ffb5ba;
+    padding: 4px 15px;
+  }
+}
+
+li {
+  input[type="text"] {
+    font-size: 14px;
+    margin: 0 10px;
+    padding: 0 10px;
+  }
+}

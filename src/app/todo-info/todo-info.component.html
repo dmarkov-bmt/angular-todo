@@ -1,5 +1,9 @@
-<button (click)="completeAll(todoList)">Complete all</button>
-<button (click)="deleteAll(todoList)">Delete all</button>
-<br>
-active: {{activeItems}} <br>
-completed: {{complItems}}
+<div class="buttons">
+  <button (click)="completeAll(todoList)">Complete all</button>
+  <button (click)="deleteAll(todoList)">Delete all</button>
+</div>
+
+<div class="info">
+  <span>active: {{activeItems}}</span>
+  <span>completed:{{complItems}}</span>
+</div>

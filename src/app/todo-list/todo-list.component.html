@@ -1,16 +1,23 @@
-<button (click)="activeTab('all')">ALL</button>
-<button (click)="activeTab('active')">Active</button>
-<button (click)="activeTab('completed')">Completed</button>
-<br>
-<br>
-<input type="text" #todoVal (keyup.enter)="addTodo(todoVal.value); todoVal.value = ''">
-<button (click)="addTodo(todoVal.value); todoVal.value = ''">add</button>
+<button (click)="activeTab('all')" class="tab">ALL</button>
+<button (click)="activeTab('active')" class="tab">Active</button>
+<button (click)="activeTab('completed')" class="tab">Completed</button>
+
+<div class="text-input">
+  <input type="text"
+         #todoVal
+         (keyup.enter)="addTodo(todoVal.value); todoVal.value = ''"
+          placeholder="input text">
+  <button (click)="addTodo(todoVal.value); todoVal.value = ''">add</button>
+</div>
 
 <ul>
   <li *ngFor="let todo of todoList">
-    <button (click)="completeTodo({id: todo.id, value: todo.value, isActive: false})" *ngIf="todo.isActive">complete</button>
+    <button (click)="completeTodo({id: todo.id, value: todo.value, isActive: false})"
+            *ngIf="todo.isActive" class="compl-button">complete
+    </button>
     <b *ngIf="!todo.isActive">Completed</b>
-    {{todo.value}}
-    <button (click)="removeTodo(todo.id)">remove</button>
+    <span *ngIf="todo.id != changeId" (click)="changeItem(todo.id)">{{todo.value}}</span>
+    <input type="text" value="{{todo.value}}" *ngIf="todo.id == changeId" (blur)="changeItem('')">
+    <button (click)="removeTodo(todo.id)" class="remove-button">remove</button>
   </li>
 </ul>
