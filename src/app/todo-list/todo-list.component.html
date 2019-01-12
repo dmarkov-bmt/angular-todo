@@ -12,12 +12,16 @@
 
 <ul>
   <li *ngFor="let todo of todoList">
-    <button (click)="completeTodo({id: todo.id, value: todo.value, isActive: false})"
+    <button (click)="updateTodo({id: todo.id, value: todo.value, isActive: false})"
             *ngIf="todo.isActive" class="compl-button">complete
     </button>
     <b *ngIf="!todo.isActive">Completed</b>
-    <span *ngIf="todo.id != changeId" (click)="changeItem(todo.id)">{{todo.value}}</span>
-    <input type="text" value="{{todo.value}}" *ngIf="todo.id == changeId" (blur)="changeItem('')">
+    <span *ngIf="todo.id != changeId" (dblclick)="changeItem(todo.id)">{{todo.value}}</span>
+    <input *ngIf="todo.id == changeId"
+           #changeTodo
+           type="text" value="{{todo.value}}"
+           (blur)="updateTodo({id: todo.id, value: changeTodo.value, isActive: todo.isActive})"
+           autofocus>
     <button (click)="removeTodo(todo.id)" class="remove-button">remove</button>
   </li>
 </ul>

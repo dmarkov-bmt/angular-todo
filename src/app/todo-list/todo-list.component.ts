@@ -10,7 +10,7 @@ import { Todo } from '../todo';
 export class TodoListComponent implements OnInit {
   @Input() todoList: Todo[];
   @Output() public add = new EventEmitter();
-  @Output() public complete = new EventEmitter();
+  @Output() public update = new EventEmitter();
   @Output() public remove = new EventEmitter();
   @Output() public changeTab = new EventEmitter();
   public changeId: String;
@@ -22,8 +22,9 @@ export class TodoListComponent implements OnInit {
     this.add.emit(value);
   }
 
-  public completeTodo(data) {
-    this.complete.emit(data);
+  public updateTodo(data) {
+    this.update.emit(data);
+    this.changeId = '';
   }
 
   public removeTodo(id) {
@@ -37,4 +38,5 @@ export class TodoListComponent implements OnInit {
   public changeItem(id){
     this.changeId = id;
   }
+
 }

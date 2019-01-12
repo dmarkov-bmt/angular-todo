@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
         });
   }
 
-  public complete(data) {
+  public update(data) {
     this.todoService.update(data)
       .subscribe(() => this.getTodo());
   }
