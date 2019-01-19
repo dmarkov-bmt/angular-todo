@@ -24,11 +24,11 @@ export class TodoService {
     return this.http.delete<any>(`${this.todoUrl}/${id}`, {});
   }
 
-  update(data): Observable<any> {
+  updateTodo(data): Observable<any> {
     return this.http.put<any>(`${this.todoUrl}/update`, { data });
   }
 
-  deleteAll(data): Observable<any> {
+  deleteAllTodo(data): Observable<any> {
     return this.http.request<any>('delete', `${this.todoUrl}`, { body: data });
   }
 

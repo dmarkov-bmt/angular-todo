@@ -9,14 +9,14 @@ import { TodoService } from './todo.service';
 })
 
 export class AppComponent implements OnInit {
-  public todoList: Todo[];
-  public activeTab: string = 'all';
-  public perPage: number = 5;
-  public curPage: number = 1;
-  public lastPage: number;
-  public activeItems: number;
-  public complItems: number;
-  public todoPortion: Todo[];
+  public todoList: Todo[] = [];
+  public activeTab = 'all';
+  public perPage = 5;
+  public curPage = 1;
+  public lastPage = 1;
+  public activeItems = 0;
+  public complItems = 0;
+  public todoPortion: Todo[] = [];
 
   constructor(private todoService: TodoService) {
   }
@@ -43,30 +43,31 @@ export class AppComponent implements OnInit {
         if (this.activeTab === 'active') {
           this.lastPage = Math.ceil(this.activeItems / this.perPage);
           this.todoPortion = this.todoList.filter(todoItem => todoItem.isActive);
-
         }
         if (this.activeTab === 'completed') {
           this.lastPage = Math.ceil(this.complItems / this.perPage);
           this.todoPortion = this.todoList.filter(todoItem => !todoItem.isActive);
-
         }
-        if (this.lastPage === 0) this.lastPage = 1;
-        if (this.curPage > this.lastPage) this.curPage = 1;
+        if (this.lastPage === 0) {
+          this.lastPage = 1;
+        }
+        if (this.curPage > this.lastPage) {
+          this.curPage = 1;
+        }
 
         this.todoPortion = this.todoPortion.slice((this.curPage - 1) * this.perPage, this.curPage * this.perPage);
       });
   }
 
   public addTodo(value) {
-    if (value.trim())
+    if (value.trim()) {
       this.todoService.addNew(value)
-        .subscribe(() => {
-          this.getTodo();
-        });
+        .subscribe(() => this.getTodo());
+    }
   }
 
-  public update(data) {
-    this.todoService.update(data)
+  public updateTodo(data) {
+    this.todoService.updateTodo(data)
       .subscribe(() => this.getTodo());
   }
 
@@ -76,22 +77,26 @@ export class AppComponent implements OnInit {
   }
 
   public pageLeft() {
-    if (this.curPage > 1) this.curPage--;
+    if (this.curPage > 1) {
+      this.curPage--;
+    }
     this.getTodo();
   }
 
   public pageRight() {
-    if (this.curPage < this.lastPage) this.curPage++;
+    if (this.curPage < this.lastPage) {
+      this.curPage++;
+    }
     this.getTodo();
   }
 
   public deleteAll(data) {
-    this.todoService.deleteAll(data)
-      .subscribe(ok => this.getTodo());
+    this.todoService.deleteAllTodo(data)
+      .subscribe(() => this.getTodo());
   }
 
   public completeAll(data) {
     this.todoService.completeAll(data)
-      .subscribe(ok => this.getTodo());
+      .subscribe(() => this.getTodo());
   }
 }

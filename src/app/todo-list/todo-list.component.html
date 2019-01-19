@@ -6,7 +6,7 @@
   <input type="text"
          #todoVal
          (keyup.enter)="addTodo(todoVal.value); todoVal.value = ''"
-          placeholder="input text">
+         placeholder="input text">
   <button (click)="addTodo(todoVal.value); todoVal.value = ''">add</button>
 </div>
 
@@ -16,7 +16,7 @@
             *ngIf="todo.isActive" class="compl-button">complete
     </button>
     <b *ngIf="!todo.isActive">Completed</b>
-    <span *ngIf="todo.id != changeId" (dblclick)="changeItem(todo.id)">{{todo.value}}</span>
+    <span *ngIf="todo.id != changeId" (dblclick)="changeItem(todo.id)" class="todo-item">{{todo.value}}</span>
     <input *ngIf="todo.id == changeId"
            #changeTodo
            type="text" value="{{todo.value}}"

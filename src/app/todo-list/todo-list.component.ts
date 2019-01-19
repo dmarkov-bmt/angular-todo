@@ -35,7 +35,7 @@ export class TodoListComponent implements OnInit {
     this.changeTab.emit(tab);
   }
 
-  public changeItem(id){
+  public changeItem(id) {
     this.changeId = id;
   }
 
