@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed, tick, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { describe } from 'selenium-webdriver/testing';
 
@@ -51,29 +51,29 @@ describe('AppComponent', () => {
     expect(appModel.component.todoPortion).toBeDefined();
   }));
 
-  test('Check add a new todo', fakeAsync(() => {
-    const getTodoSpy = spyOn(appModel.component, 'getTodo');
+  test('New todo should be added if function addTodo called', fakeAsync(() => {
+    appModel.component.todoList = [];
     appModel.component.addTodo('to do');
-    tick(10);
-    expect(getTodoSpy).toBeCalled();
+    tick(20);
+    expect(appModel.component.todoList.length).toBe(4);
   }));
 
-  test('Check update a todo', fakeAsync(() => {
-    const getTodoSpy = spyOn(appModel.component, 'getTodo');
+  test('Todo should be updated if function update called', fakeAsync(() => {
+    appModel.component.todoList = todos;
     appModel.component.update({
       id: '836c80c0-1b5f-11e9-a86a-edd770bba7f4',
       isActive: true,
-      value: 'go to a shop'
+      value: 'go to a park'
     });
-    tick(10);
-    expect(getTodoSpy).toBeCalled();
+    tick(20);
+    expect(appModel.component.todoList[0].value).toEqual('go to a park');
   }));
 
-  test('Check remove a todo', fakeAsync(() => {
-    const getTodoSpy = spyOn(appModel.component, 'getTodo');
-    appModel.component.remove('836c80c0-1b5f-11e9-a86a-edd770bba7f4');
-    tick(10);
-    expect(getTodoSpy).toBeCalled();
+  test('Todo should be removed if function remove called', fakeAsync(() => {
+    appModel.component.todoList = todos;
+    appModel.component.remove('836c80c0-1b5f-18o6-a86a-edd770bba7f4');
+    tick(20);
+    expect(appModel.component.todoList.length).toBe(3);
   }));
 
   describe('Test AppComponent with TodoPaginationComponent (deep)', () => {
@@ -129,7 +129,7 @@ describe('AppComponent', () => {
       expect(completedEl.textContent).toBe(`completed:${appModel.component.complItems}`);
     });
 
-    test('completeAll: all todos should be completed if click on the button `Complete all`', () => {
+    test('Array of todos should come to TodoInfoComponent and change ', () => {
       appModel.component.todoList = todos;
       fixture.detectChanges();
       completeAllEl.click();
@@ -138,11 +138,13 @@ describe('AppComponent', () => {
       expect(appModel.component.todoList[2].isActive).toBeFalsy();
     });
 
-    test('Function getTodo should be called if called function completeAll', fakeAsync(() => {
-      const getTodoSpy = spyOn(appModel.component, 'getTodo');
-      appModel.component.completeAll(todos);
-      tick(10);
-      expect(getTodoSpy).toBeCalled();
+    test('All todos should be sent and updated if click on the button `Complete all`', async(() => {
+      appModel.component.todoList = [];
+      fixture.detectChanges();
+      completeAllEl.click();
+      fixture.whenStable().then(() => {
+        expect(appModel.component.todoList[0].isActive).toBeTruthy();
+      });
     }));
 
     test('deleteAll: all todos should be deleted if click on the button `Delete all`', async(() => {

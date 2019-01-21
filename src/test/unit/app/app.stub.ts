@@ -16,27 +16,38 @@ export let Stub = {
   addNew(value: string) {
     return Observable.create((observer: Observer<any>) => {
       setTimeout(() => {
-        observer.next({});
+        todos.push({
+          id: '836c80c0-1b5f-18o6-a86a-edd770bba7f4',
+          isActive: true,
+          value
+        });
+        observer.next(todos);
       }, 10);
     });
   },
   update(data: Todo) {
     return Observable.create((observer: Observer<any>) => {
       setTimeout(() => {
-        observer.next({});
+        const findItem = todos.find((item) => item.id === data.id);
+        findItem.value = data.value;
+        observer.next(todos);
       }, 10);
     });
   },
   remove(id: string) {
     return Observable.create((observer: Observer<any>) => {
       setTimeout(() => {
-        observer.next({});
+        todos.pop();
+        observer.next(todos);
       }, 10);
     });
   },
   completeAll(data: Todo[]) {
     return Observable.create((observer: Observer<any>) => {
       setTimeout(() => {
+        todos.forEach((item) => {
+          item.isActive = !item.isActive;
+        });
         observer.next(data);
       }, 10);
     });
